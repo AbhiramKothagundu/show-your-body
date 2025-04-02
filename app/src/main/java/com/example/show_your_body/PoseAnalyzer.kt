@@ -2,6 +2,7 @@ package com.example.show_your_body
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import kotlinx.coroutines.CoroutineScope
@@ -69,8 +70,6 @@ class PoseAnalyzer(
             try {
                 // Format the keypoints as JSON
                 val jsonKeypoints = JSONArray()
-
-                // keypoints is [17][3] => each row is [y, x, confidence]
                 for (i in keypoints.indices) {
                     val y = keypoints[i][0]
                     val x = keypoints[i][1]
@@ -87,6 +86,8 @@ class PoseAnalyzer(
                 jsonBody.put("keypoints", jsonKeypoints)
                 jsonBody.put("timestamp", System.currentTimeMillis())
 
+                Log.d("PoseAnalyzer", "Sending data to backend: $jsonBody")
+
                 // POST to your server
                 val url = URL(backendUrl)
                 val connection = url.openConnection() as HttpURLConnection
@@ -100,11 +101,19 @@ class PoseAnalyzer(
                 }
 
                 val responseCode = connection.responseCode
-                // Optionally handle non-2xx responses
+                Log.d("PoseAnalyzer", "Backend response code: $responseCode")
+                
+                // Add this error handling
+                if (responseCode !in 200..299) {
+                    val errorStream = connection.errorStream
+                    val errorResponse = errorStream?.bufferedReader()?.use { it.readText() }
+                    Log.e("PoseAnalyzer", "Error response: $errorResponse")
+                }
+                
                 connection.disconnect()
 
             } catch (e: Exception) {
-                // Log error or handle it
+                Log.e("PoseAnalyzer", "Error sending data to backend", e)
             }
         }
     }
