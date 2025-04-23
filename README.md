@@ -1,16 +1,16 @@
 # Show Your Body
 
 ## Overview
-**Show Your Body** is a mobile application that utilizes **MoveNet** (or another pose tracking model) to track human body movements and provide real-time analysis. This project leverages **TensorFlow Lite** for efficient on-device pose estimation and is implemented using **Android (Java/Kotlin)**.
+**Show Your Body** is a mobile application that utilizes **Mediapipe** to track human body movements and provide real-time analysis. This project leverages **TensorFlow Lite** for efficient on-device pose estimation and is implemented using **Android (Java/Kotlin)**.
 
 ## Features
-- **Real-time pose tracking** using MoveNet
+- **Real-time pose tracking** using Mediapipe
 - **User-friendly interface** to visualize body movements
 - **Customizable backend URL** for data processing
 - **Seamless integration** with Android UI components
 
 ## Technologies Used
-- **MoveNet / PoseNet** for pose estimation
+- **Mediapipe** for pose estimation
 - **TensorFlow Lite (TFLite)** for on-device inference
 - **Android (Java/Kotlin)** for mobile application development
 - **Jetpack Compose / XML-based UI** for user interface
@@ -38,7 +38,7 @@
 
 ## How It Works
 - The **camera captures** a live feed of the user’s body.
-- **MoveNet (or PoseNet)** detects and tracks key points of the body (e.g., head, shoulders, elbows, knees).
+- **Mediapipe** detects and tracks key points of the body (e.g., head, shoulders, elbows, knees).
 - The app **visualizes** the detected poses using overlays.
 - Optionally, data can be **sent to a backend** for further analysis or visualization.
 
